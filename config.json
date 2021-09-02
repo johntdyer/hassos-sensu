@@ -1,11 +1,33 @@
 {
-  "name": "Hello world",
+  "name": "Sensu Agent",
   "version": "1",
-  "slug": "hello_world",
-  "description": "My first real add-on!",
+  "slug": "sensu_agent",
+  "description": "Sensu agent",
   "arch": ["armhf", "armv7", "aarch64", "amd64", "i386"],
   "startup": "application",
+  "image": "repo/{arch}-hassos-sensu-agent",
+  "host_network": true,
   "boot": "auto",
-  "options": {},
-  "schema": {}
+  "map": ["config"],
+  "options": {
+    "sensu_backend": null,
+    "subscription_group": "",
+    "sensu_agent_socket": 3030,
+    "sensu_agent_api": 3031,
+    "sensu_agent_statsd": 8125
+  },
+  "schema": {
+    "sensu_backend": "url",
+    "subscription_group": "list",
+    "sensu_agent_socket": "int",
+    "sensu_agent_api": "int",
+    "sensu_agent_statsd": "int"
+  },
+  "full_access" : true,
+  "ports": {
+    "3030/tcp": 3030,
+    "3030/udp": 3030,
+    "3031/tcp": 3031,
+    "8125/tcp": 8125
+  }
 }

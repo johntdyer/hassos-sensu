@@ -1,5 +1,5 @@
 {
-  "name": "HASS.io Sensuy Agent",
+  "name": "HASS.io Sensu Agent",
   "url": "https://github.com/johntdyer/hassos-sensu",
   "maintainer": "John Dyer <johntdyer@gmail.com>"
 }
