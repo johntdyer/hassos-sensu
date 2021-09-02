@@ -5,7 +5,7 @@
   "description": "Sensu agent",
   "arch": ["armhf", "armv7", "aarch64", "amd64", "i386"],
   "startup": "application",
-  "image": "repo/{arch}-hassos-sensu-agent",
+
   "host_network": true,
   "boot": "auto",
   "map": ["config"],
