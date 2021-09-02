@@ -11,14 +11,14 @@
   "map": ["config"],
   "options": {
     "sensu_backend": null,
-    "subscription_group": "",
+    "subscription_group": null,
     "sensu_agent_socket": 3030,
     "sensu_agent_api": 3031,
     "sensu_agent_statsd": 8125
   },
   "schema": {
     "sensu_backend": "url",
-    "subscription_group": "list",
+    "subscription_group": "str",
     "sensu_agent_socket": "int",
     "sensu_agent_api": "int",
     "sensu_agent_statsd": "int"
