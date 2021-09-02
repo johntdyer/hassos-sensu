@@ -1,6 +1,6 @@
 {
   "name": "Sensu Agent",
-  "version": "0.0.5",
+  "version": "0.0.6",
   "slug": "sensu_agent",
   "description": "Sensu agent",
   "arch": ["armhf", "armv7", "aarch64", "amd64", "i386"],
@@ -10,7 +10,7 @@
   "boot": "auto",
   "map": ["config"],
   "options": {
-    "sensu_backend": "https://sensu-backend/8081",
+    "sensu_backend": "https://sensu-backend:8081",
     "subscription_group": null,
     "sensu_agent_socket": 3030,
     "sensu_agent_api": 3031,
