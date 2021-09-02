@@ -4,7 +4,7 @@ FROM $BUILD_FROM
 ENV LANG C.UTF-8
 
 # Install requirements for add-on
-RUN apk add --no-cache example_alpine_package
+# RUN apk add --no-cache example_alpine_package
 
 # Copy data for add-on
 COPY run.sh /
