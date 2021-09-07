@@ -1,6 +1,6 @@
 {
   "name": "Sensu Agent",
-  "version": "0.0.18",
+  "version": "0.0.19",
   "slug": "sensu_agent",
   "description": "Sensu agent",
   "arch": [
