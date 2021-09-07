@@ -1,14 +1,15 @@
 ---
 # Automatically generated do not edit
 
-
 ##
 # agent configuration
 ##
 name: "{{ env "HOSTNAME" }}"
 namespace: "{{ .namespace }}"
-{# subscriptions: ["ubuntu","proxy"] #}
-subscriptions: "[{% for sub in .subscriptions %}"{{ sub }}"{{ "," if not loop.last else "" }} {% endfor %}]"
+subscriptions:
+    {{ range $_, $element := .subscriptions -}}
+    - {{$element}}
+    {{end }}
 
 password: {{.sensu_password}}
 
@@ -46,5 +47,6 @@ deregister: true
 #extended-attributes: ""
 log-level: "{{.log_level}}"
 #redact: ""
+
 
 
