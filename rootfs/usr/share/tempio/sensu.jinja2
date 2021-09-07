@@ -14,7 +14,8 @@ subscriptions:
 backend-url:
   - "{{ .sensu_backend_url}}"
 
-password: {{.sensu_password}}
+user: "{{.sensu_password}}"
+password: "{{.sensu_password}}"
 
 ##
 # api configuration
@@ -33,11 +34,13 @@ socket-port: {{.sensu_agent_socket_port}}
 ##
 # statsd configuration
 ##
-statsd-disable:  {{ .sensu_local_statsd_listener_sensu_local_statsd_disabledisable }}
+statsd-disable:  {{ .sensu_local_statsd_disable }}
 statsd-event-handlers: ""
 statsd-flush-interval: 10
 statsd-metrics-host: "127.0.0.1"
 statsd-metrics-port: {{.sensu_agent_statsd_port}}
+
+
 ##
 # other
 ##
@@ -48,7 +51,7 @@ deregister: true
 #keepalive-timeout: 120
 #keepalive-interval: 20
 #extended-attributes: ""
-log-level: {{.log_level}}
+log-level: {{.sensu_log_level}}
 #redact: ""
 
 
