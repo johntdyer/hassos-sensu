@@ -1,4 +1,4 @@
-FROM homeassistant/aarch64-base:3.11
+FROM homeassistant/amd64-base:3.11
 
 # ARG BUILD_FROM=alpine
 # FROM golang:1.15.2-alpine AS gobuilder
