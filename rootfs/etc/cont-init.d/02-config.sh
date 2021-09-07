@@ -17,11 +17,11 @@ fi
 # interface=$(bashio::network.name)
 
 bashio::log.info "Using hostname=${HOSTNAME}" #// interface=${interface}"
+mkdir -p /data/sensu/cache
+# mkdir -p /etc/sensu/
+# mkdir -p /var/cache/sensu/sensu-agent
 
-mkdir -p /etc/sensu/
-mkdir -p /var/cache/sensu/sensu-agent
-
-CONFIG="/etc/sensu/sensu-agent.conf"
+CONFIG="/config/sensu/agent.conf"
 bashio::log.info "Configuring Sensu..."
 tempio \
     -conf /data/options.json \

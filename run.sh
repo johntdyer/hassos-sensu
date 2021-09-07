@@ -3,7 +3,7 @@
 
 bashio::log.info "Creating Sensiu Configuration"
 
-# CONFIG_PATH=/data/options.json
+CONFIG_PATH=/data/options.json
 
 SENSU_BACKEND_URL="$(bashio::config 'sensu_backend_url')"
 SENSU_SUBSCRIPTIONS="$(bashio::config 'sensu_subscriptions')"
@@ -27,4 +27,4 @@ export SENSU_PASSWORD
 export SENSU_CACHE_DIR
 export SENSU_NAME
 
-/opt/sensu/bin/sensu-agent start # --backend-url "${SENSU_BACKEND_URL}" --deregister --keepalive-interval=5 --keepalive-warning-timeout=10 --password "l+qjbQFq01iNeWoJLBFN6fzoOotS" --subscriptions hass --user "${SENSU_USER}"
+/opt/sensu/bin/sensu-agent start
