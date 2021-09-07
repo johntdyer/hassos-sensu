@@ -3,6 +3,16 @@
 # Home Assistant Community Add-on: Base Images
 # Displays a simple add-on banner on startup
 # ==============================================================================
+
+ls -la
+bashio::log.blue \
+        '-----------------------------------------------------------'
+ls -la /data
+bashio::log.blue \
+        '-----------------------------------------------------------'
+cat /data/options.json
+bashio::log.blue \
+        '-----------------------------------------------------------'
  bashio::log.blue \
         '-----------------------------------------------------------'
     bashio::log.blue " Add-on: $(bashio::addon.name)"
