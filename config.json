@@ -1,6 +1,6 @@
 {
   "name": "Sensu Agent",
-  "version": "0.0.14",
+  "version": "0.0.15",
   "slug": "sensu_agent",
   "description": "Sensu agent",
   "arch": [
@@ -16,6 +16,9 @@
   "map": [
     "config"
   ],
+  "environment" : {
+
+  },
   "options": {
     "sensu_backend_url": "http://homeassistant:8081",
     "sensu_subscriptions": [],
