@@ -1,96 +1,124 @@
-ARG BUILD_FROM=alpine
-FROM golang:1.15.2-alpine AS gobuilder
+FROM homeassistant/aarch64-base:3.11
 
-# Local build:
-# docker build -t ruuvitag-mqtt . && docker run --rm -v $PWD/data/options.example.json:/data/options.json ruuvitag-mqtt
+# ARG BUILD_FROM=alpine
+# FROM golang:1.15.2-alpine AS gobuilder
 
-ARG SENSU_GO_VERSION
-ARG SENSU_GO_HASH
+# ENV LANG C.UTF-8
 
-WORKDIR /src/sensu-go
+# ARG SENSU_GO_VERSION
+# ARG SENSU_GO_HASH
+# ARG SENSU_GO_ARCH
 
-RUN wget -O sensu-go.tar.gz "https://github.com/sensu/sensu-go/archive/v$SENSU_GO_VERSION.tar.gz"; \
-	tar -C . --strip-components=1  -xzf sensu-go.tar.gz; \
-	rm sensu-go.tar.gz;
+# # https://s3-us-west-2.amazonaws.com/sensu.io/sensu-go/6.4.3/sensu-go_6.4.3_linux_amd64.tar.gz
 
-RUN go build -ldflags '-X "github.com/sensu/sensu-go/version.Version='`echo $SENSU_GO_VERSION`'" -X "github.com/sensu/sensu-go/version.BuildDate='`date +'%Y-%d-%m'`'" ' -o bin/sensu-agent ./cmd/sensu-agent
+# WORKDIR /src/sensu-go
 
-RUN bin/sensu-agent version |grep $SENSU_GO_VERSION
+# RUN wget -O sensu-go.tar.gz "https://github.com/sensu/sensu-go/archive/v$SENSU_GO_VERSION.tar.gz"; \
+# 	tar -C . --strip-components=1  -xzf sensu-go.tar.gz; \
+# 	rm sensu-go.tar.gz;
 
+# RUN go build -ldflags '-X "github.com/sensu/sensu-go/version.Version='`echo $SENSU_GO_VERSION`'" -X "github.com/sensu/sensu-go/version.BuildDate='`date +'%Y-%d-%m'`'" ' -o bin/sensu-agent ./cmd/sensu-agent
 
-FROM sensu/sensu as orginal
+# RUN bin/sensu-agent version |grep $SENSU_GO_VERSION
 
-RUN echo "Get me youre scripts ;)"
-
-
-FROM $BUILD_FROM
-
+# FROM sensu/sensu as orginal
+# RUN echo "Get me youre scripts ;)"
 
 
-RUN addgroup -S sensu && \
-    adduser -DHS sensu -G sensu -h /var/lib/sensu && \
-    mkdir -pv /etc/sensu /var/cache/sensu /var/lib/sensu /var/log/sensu /var/run/sensu && \
-    chown -R sensu:sensu /etc/sensu /var/cache/sensu /var/lib/sensu /var/log/sensu /var/run/sensu /var/lib/sensu
+# ARG BUILD_FROM
+# amd64: alpine:${VERSION}
+# i386: i386/alpine:${VERSION}
+# aarch64: arm64v8/alpine:${VERSION}
+# armv7: arm32v7/alpine:${VERSION}
+# armhf: arm32v6/alpine:${VERSION}
+
+# FROM homeassistant/aarch64-base:3.11
+#ghcr.io/home-assistant/base:3.13
+
+# Environment variables
+ENV \
+  HOME="/root" \
+  LANG="C.UTF-8" \
+  PS1="$(whoami)@$(hostname):$(pwd)$ " \
+  S6_BEHAVIOUR_IF_STAGE2_FAILS=2 \
+  S6_CMD_WAIT_FOR_SERVICES=1 \
+  TERM="xterm-256color"
+
+
+# COPY --from=gobuilder /src/sensu-go/bin/ /opt/sensu/bin/
+
+SHELL ["/bin/ash", "-o", "pipefail", "-c"]
+
+
+# Copy data
+COPY rootfs /
+# # Copy data for add-on
+COPY run.sh /
+RUN chmod a+x /run.sh
+
+# S6-Overlay
+WORKDIR /
+ENTRYPOINT ["/init"]
 
 
 
-RUN apk add --no-cache ca-certificates dumb-init && \
-    ln -sf /opt/sensu/bin/entrypoint.sh /usr/local/bin/sensu-agent
 
-USER sensu
+# ARG BUILD_FROM=homeassistant/amd64-base:latest
+# FROM $BUILD_FROM
 
-VOLUME /var/lib/sensu
+# ARG BUI\
+# # Entrypoint & CMD
+# ENTRYPOINT ["/init"]
+
+# ENV LANG C.UTF-8
+
+# WORKDIR /
+
+# # FROM $BUILD_FROM
+# # FROM ghcr.io/hassio-addons/base/aarch64@sha256:5086c238bdf93a67ca83803960516f160af6323251902d71eef5deb59ea82f7b
+# # ENV LANG C.UTF-8
+
+# RUN addgroup -S sensu && \
+#     adduser -DHS sensu -G sensu -h /var/lib/sensu && \
+#     mkdir -pv /etc/sensu /var/cache/sensu /var/lib/sensu /var/log/sensu /var/run/sensu && \
+#     chown -R sensu:sensu /etc/sensu /var/cache/sensu /var/lib/sensu /var/log/sensu /var/run/sensu /var/lib/sensu
 
 
-CMD ["/opt/sensu/bin/sensu-agent"]
-#sensu-agent"]
-EXPOSE 3030 3031 8126
+# # Copy data for add-on
+# COPY run.sh /
+# RUN chmod a+x /run.sh
 
-COPY --from=gobuilder /src/sensu-go/bin/ /opt/sensu/bin/
-# COPY --from=orginal /opt/sensu/bin/entrypoint.sh /opt/sensu/bin/
+# # RUN mkdir /data
+# # USER sensu
+# # Entrypoint & CMD
 
-# # Move to /ruuvitag directory as the place for resulting binary folder
-# WORKDIR /ruuvitag
+# VOLUME /var/lib/sensu
 
-# # Copy binary from build to main folder
-# # COPY --from=builder /build/entrypoint.sh ./
-# COPY --from=builder /build/main ./
-
-# # Command to run when starting the container
-# # CMD ["/ruuvitag/entrypoint.sh"]
-# CMD ["/ruuvitag/main"]
-
-# # Labels
 # LABEL \
-#   io.hass.name="RuuviTag into MQTT" \
-#   io.hass.description="Broadcast RuuviTag sensors into MQTT" \
+#   io.hass.name="Sensu Agent" \
+#   io.hass.description="Sensu agent for Home Assistant" \
 #   io.hass.arch="${BUILD_ARCH}" \
 #   io.hass.type="addon" \
 #   io.hass.version=${BUILD_VERSION} \
-#   maintainer="Kimmo Saari <kirbo@kirbo-designs.com>" \
-#   org.label-schema.description="Broadcast RuuviTag sensors into MQTT" \
+#   maintainer="John Dyer <johntdyer@gmail.com>"\
+#   org.label-schema.description="Sensu Agent for HassOS" \
 #   org.label-schema.build-date=${BUILD_DATE} \
-#   org.label-schema.name="RuuviTag into MQTT" \
+#   org.label-schema.name="Sensu Agent" \
 #   org.label-schema.schema-version="1.0" \
-#   org.label-schema.usage="https://gitlab.com/kirbo/addon-ruuvitag-mqtt/-/blob/master/README.md" \
+#   org.label-schema.usage="https://gitlab.com/johntdyer/addon-sensu-agent/-/blob/master/README.md" \
 #   org.label-schema.vcs-ref=${BUILD_REF} \
-#   org.label-schema.vcs-url="https://gitlab.com/kirbo/addon-ruuvitag-mqtt/" \
-#   org.label-schema.vendor="HomeAssistant add-ons by Kimmo Saari"
+#   org.label-schema.vcs-url="https://gitlab.com/johntdyer/addon-sensu-agent/" \
+#   org.label-schema.vendor="HomeAssistant add-ons by John Dyer"
 
 
+# EXPOSE 3030 3031 8126
 
-# # ARG BUILD_FROM
-# # FROM $BUILD_FROM
+# COPY --from=gobuilder /src/sensu-go/bin/ /opt/sensu/bin/
 
-# # ENV LANG C.UTF-8
 
-# # # Install requirements for add-on
-# # # RUN apk add --no-cache example_alpine_package
+# # ENTRYPOINT ["/init"]
 
-# # # Copy data for add-on
-# # COPY run.sh /
-# # RUN chmod a+x /run.sh
+# CMD ["sh","/run.sh"]
 
-# # LABEL io.hass.version="VERSION" io.hass.type="addon" io.hass.arch="armhf|aarch64|i386|amd64"
+# Copy data
 
-# # CMD [ "/run.sh" ]

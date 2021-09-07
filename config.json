@@ -3,31 +3,62 @@
   "version": "0.0.6",
   "slug": "sensu_agent",
   "description": "Sensu agent",
-  "arch": ["armhf", "armv7", "aarch64", "amd64", "i386"],
+  "arch": [
+    "armhf",
+    "armv7",
+    "aarch64",
+    "amd64",
+    "i386"
+  ],
   "startup": "application",
-
   "host_network": true,
   "boot": "auto",
-  "map": ["config"],
+  "map": [
+    "config"
+  ],
   "options": {
-    "sensu_backend": "https://sensu-backend:8081",
-    "subscription_group": null,
-    "sensu_agent_socket": 3030,
-    "sensu_agent_api": 3031,
-    "sensu_agent_statsd": 8125
+    "sensu_backend_url": "http://homeassistant:8081",
+    "sensu_subscriptions": [],
+    "sensu_agent_socket_port": 3030,
+    "sensu_agent_api_port": 3031,
+    "sensu_agent_statsd_port": 8125,
+    "sensu_name": "homeassistant",
+    "log_level": "debug",
+    "sensu_user": null,
+    "sensu_password": null,
+    "sensu_cache_dir": "/data",
+    "sensu_local_api_disable": "bool",
+    "sensu_local_statsd_disable": "bool",
+    "sensu_local_socket_disable": "bool"
   },
   "schema": {
-    "sensu_backend": "url",
-    "subscription_group": "str",
-    "sensu_agent_socket": "int",
-    "sensu_agent_api": "int",
-    "sensu_agent_statsd": "int"
+    "sensu_user": "str",
+    "sensu_password": "str",
+    "sensu_name": "str",
+    "sensu_backend_url": "url",
+    "sensu_subscriptions": [
+      "str"
+    ],
+    "sensu_cache_dir": "str",
+    "sensu_agent_socket_port": "int",
+    "sensu_agent_api_port": "int",
+    "sensu_agent_statsd_port": "int",
+    "log_level": "list(debug|info|notice|warning|error|fatal)?",
+    "sensu_local_api_disable": false,
+    "sensu_local_statsd_disable": false,
+    "sensu_local_socket_disable": false
   },
-  "full_access" : true,
+  "full_access": true,
   "ports": {
     "3030/tcp": 3030,
     "3030/udp": 3030,
     "3031/tcp": 3031,
     "8125/tcp": 8125
+  },
+  "ports_description": {
+    "3030/tcp": "Sensu Agent socket listen port ( TCP ) ",
+    "3030/udp": "Sensu Agent socket listen port ( UDP ) ",
+    "3031/tcp": "Sensu Agent API listen port",
+    "8125/tcp": "Sensu Agent statsD listen port"
   }
 }

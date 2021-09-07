@@ -1,1 +1,1 @@
-{ "target": "beer" }
+{ "target": "beer", "log_level" : "debug" }
