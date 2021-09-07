@@ -5,7 +5,7 @@
 # agent configuration
 ##
 name: "{{ env "HOSTNAME" }}"
-namespace: "{{ .namespace }}"
+namespace: "{{ .sensu_namespace }}"
 subscriptions:
     {{ range $_, $element := .subscriptions -}}
     - {{$element}}

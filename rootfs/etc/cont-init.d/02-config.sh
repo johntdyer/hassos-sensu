@@ -26,5 +26,5 @@ bashio::log.info "Configuring Sensu..."
 tempio \
     -conf /data/options.json \
     -template usr/share/tempio/sensu.jinja2 \
-    -out test.json
+    -out $CONFIG
 

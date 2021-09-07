@@ -1,25 +1,23 @@
-FROM homeassistant/amd64-base:3.11
+ARG BUILD_FROM=alpine
+FROM golang:1.15.2-alpine AS gobuilder
 
-# ARG BUILD_FROM=alpine
-# FROM golang:1.15.2-alpine AS gobuilder
+ENV LANG C.UTF-8
 
-# ENV LANG C.UTF-8
+ARG SENSU_GO_VERSION
+ARG SENSU_GO_HASH
+ARG SENSU_GO_ARCH
 
-# ARG SENSU_GO_VERSION
-# ARG SENSU_GO_HASH
-# ARG SENSU_GO_ARCH
+# https://s3-us-west-2.amazonaws.com/sensu.io/sensu-go/6.4.3/sensu-go_6.4.3_linux_amd64.tar.gz
 
-# # https://s3-us-west-2.amazonaws.com/sensu.io/sensu-go/6.4.3/sensu-go_6.4.3_linux_amd64.tar.gz
+WORKDIR /src/sensu-go
 
-# WORKDIR /src/sensu-go
+RUN wget -O sensu-go.tar.gz "https://github.com/sensu/sensu-go/archive/v$SENSU_GO_VERSION.tar.gz"; \
+	tar -C . --strip-components=1  -xzf sensu-go.tar.gz; \
+	rm sensu-go.tar.gz;
 
-# RUN wget -O sensu-go.tar.gz "https://github.com/sensu/sensu-go/archive/v$SENSU_GO_VERSION.tar.gz"; \
-# 	tar -C . --strip-components=1  -xzf sensu-go.tar.gz; \
-# 	rm sensu-go.tar.gz;
+RUN go build -ldflags '-X "github.com/sensu/sensu-go/version.Version='`echo $SENSU_GO_VERSION`'" -X "github.com/sensu/sensu-go/version.BuildDate='`date +'%Y-%d-%m'`'" ' -o bin/sensu-agent ./cmd/sensu-agent
 
-# RUN go build -ldflags '-X "github.com/sensu/sensu-go/version.Version='`echo $SENSU_GO_VERSION`'" -X "github.com/sensu/sensu-go/version.BuildDate='`date +'%Y-%d-%m'`'" ' -o bin/sensu-agent ./cmd/sensu-agent
-
-# RUN bin/sensu-agent version |grep $SENSU_GO_VERSION
+RUN bin/sensu-agent version |grep $SENSU_GO_VERSION
 
 # FROM sensu/sensu as orginal
 # RUN echo "Get me youre scripts ;)"
@@ -34,6 +32,7 @@ FROM homeassistant/amd64-base:3.11
 
 # FROM homeassistant/aarch64-base:3.11
 #ghcr.io/home-assistant/base:3.13
+FROM homeassistant/amd64-base:3.11
 
 # Environment variables
 ENV \
@@ -111,14 +110,14 @@ ENTRYPOINT ["/init"]
 #   org.label-schema.vendor="HomeAssistant add-ons by John Dyer"
 
 
-# EXPOSE 3030 3031 8126
+EXPOSE 3030 3031 8126
 
-# COPY --from=gobuilder /src/sensu-go/bin/ /opt/sensu/bin/
+COPY --from=gobuilder /src/sensu-go/bin/ /opt/sensu/bin/
 
 
-# # ENTRYPOINT ["/init"]
 
-# CMD ["sh","/run.sh"]
+
+CMD ["sh","/run.sh"]
 
 # Copy data
 
