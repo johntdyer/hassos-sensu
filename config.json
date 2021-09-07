@@ -27,9 +27,9 @@
     "sensu_user": null,
     "sensu_password": null,
     "sensu_cache_dir": "/data",
-    "sensu_local_api_disable": "bool",
-    "sensu_local_statsd_disable": "bool",
-    "sensu_local_socket_disable": "bool"
+    "sensu_local_api_disable": false,
+    "sensu_local_statsd_disable": false,
+    "sensu_local_socket_disable": false
   },
   "schema": {
     "sensu_user": "str",
@@ -44,9 +44,9 @@
     "sensu_agent_api_port": "int",
     "sensu_agent_statsd_port": "int",
     "log_level": "list(debug|info|notice|warning|error|fatal)?",
-    "sensu_local_api_disable": false,
-    "sensu_local_statsd_disable": false,
-    "sensu_local_socket_disable": false
+    "sensu_local_api_disable": "bool",
+    "sensu_local_statsd_disable": "bool",
+    "sensu_local_socket_disable": "bool"
   },
   "full_access": true,
   "ports": {
