@@ -114,10 +114,7 @@ EXPOSE 3030 3031 8126
 
 COPY --from=gobuilder /src/sensu-go/bin/ /opt/sensu/bin/
 
-
-
-
-CMD ["sh","/run.sh"]
+CMD ["/usr/bin/with-contenv","bashio","/run.sh"]
 
 # Copy data
 
