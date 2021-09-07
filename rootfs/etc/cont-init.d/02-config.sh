@@ -25,6 +25,6 @@ CONFIG="/etc/sensu/sensu-agent.conf"
 bashio::log.info "Configuring Sensu..."
 tempio \
     -conf /data/options.json \
-    -template usr/share/tempio/sensu.gtpl \
+    -template usr/share/tempio/sensu.jinja2 \
     -out test.json
 

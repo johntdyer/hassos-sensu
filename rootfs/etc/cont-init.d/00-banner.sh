@@ -11,7 +11,7 @@
     bashio::log.blue \
         '-----------------------------------------------------------'
 
-if false; then # bashio::supervisor.ping; then
+if bashio::supervisor.ping; then
     bashio::log.blue \
         '-----------------------------------------------------------'
     bashio::log.blue " Add-on: $(bashio::addon.name)"
