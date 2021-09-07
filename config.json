@@ -1,6 +1,6 @@
 {
   "name": "Sensu Agent",
-  "version": "0.0.8",
+  "version": "0.0.9",
   "slug": "sensu_agent",
   "description": "Sensu agent",
   "arch": [
@@ -23,8 +23,9 @@
     "sensu_agent_api_port": 3031,
     "sensu_agent_statsd_port": 8125,
     "sensu_name": "homeassistant",
+    "sensu_namespace" : "default",
     "log_level": "debug",
-    "sensu_user": null,
+    "sensu_user": "agent",
     "sensu_password": null,
     "sensu_cache_dir": "/data",
     "sensu_local_api_disable": false,
@@ -36,6 +37,7 @@
     "sensu_password": "str",
     "sensu_name": "str",
     "sensu_backend_url": "url",
+    "sensu_namespace" : "str",
     "sensu_subscriptions": [
       "str"
     ],

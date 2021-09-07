@@ -14,9 +14,9 @@ if bashio::var.is_empty "${HOSTNAME}"; then
 fi
 
 # Get default interface
-interface=$(bashio::network.name)
+# interface=$(bashio::network.name)
 
-bashio::log.info "Using hostname=${HOSTNAME} interface=${interface}"
+bashio::log.info "Using hostname=${HOSTNAME}" #// interface=${interface}"
 
 mkdir -p /etc/sensu/
 mkdir -p /var/cache/sensu/sensu-agent
@@ -25,6 +25,6 @@ CONFIG="/etc/sensu/sensu-agent.conf"
 bashio::log.info "Configuring Sensu..."
 tempio \
     -conf /data/options.json \
-    -template /usr/share/tempio/sensu.gtpl \
+    -template /usr/share/tempio/sensu.jinja2 \
     -out "${CONFIG}"
 
