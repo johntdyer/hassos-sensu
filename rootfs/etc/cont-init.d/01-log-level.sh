@@ -12,33 +12,26 @@ if bashio::config.exists log_level; then
 
     # Find the matching LOG_LEVEL
     case "$(bashio::string.lower "$(bashio::config log_level)")" in
-        all)
-            log_level="${__BASHIO_LOG_LEVEL_ALL}"
-            ;;
-        trace)
-            log_level="${__BASHIO_LOG_LEVEL_TRACE}"
-            ;;
         debug)
             log_level="${__BASHIO_LOG_LEVEL_DEBUG}"
             ;;
         info)
             log_level="${__BASHIO_LOG_LEVEL_INFO}"
             ;;
-        notice)
-            log_level="${__BASHIO_LOG_LEVEL_NOTICE}"
-            ;;
-        warning)
-            log_level="${__BASHIO_LOG_LEVEL_WARNING}"
+        warn)
+            log_level="${__BASHIO_LOG_LEVEL_WARN}"
             ;;
         error)
             log_level="${__BASHIO_LOG_LEVEL_ERROR}"
             ;;
+        panic)
+            log_level="${__BASHIO_LOG_LEVEL_PANIC}"
+            ;;
         fatal)
             log_level="${__BASHIO_LOG_LEVEL_FATAL}"
             ;;
-        off)
-            log_level="${__BASHIO_LOG_LEVEL_OFF}"
-            ;;
+
+
         *)
             bashio::exit.nok "Unknown log_level: ${log_level}"
     esac
