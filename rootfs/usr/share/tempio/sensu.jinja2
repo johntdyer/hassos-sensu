@@ -44,7 +44,7 @@ statsd-metrics-port: {{.sensu_agent_statsd_port}}
 ##
 # other
 ##
-#cache-dir: "/var/cache/sensu/sensu-agent"
+cache-dir: "{{.sensu_cache_dir}}/cache"
 #config-file: ""
 deregister: true
 #deregistration-handler: ""

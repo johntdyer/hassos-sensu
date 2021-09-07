@@ -21,7 +21,7 @@ mkdir -p /data/sensu/cache
 # mkdir -p /etc/sensu/
 # mkdir -p /var/cache/sensu/sensu-agent
 
-CONFIG="/config/sensu/agent.conf"
+CONFIG="/data/agent.conf"
 bashio::log.info "Configuring Sensu..."
 tempio \
     -conf /data/options.json \
