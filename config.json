@@ -1,6 +1,6 @@
 {
   "name": "Sensu Agent",
-  "version": "0.0.15",
+  "version": "0.0.16",
   "slug": "sensu_agent",
   "description": "Sensu agent",
   "arch": [
@@ -20,7 +20,7 @@
 
   },
   "options": {
-    "sensu_backend_url": "http://homeassistant:8081",
+    "sensu_backend_url": "ws://homeassistant:8081",
     "sensu_subscriptions": [],
     "sensu_agent_socket_port": 3030,
     "sensu_agent_api_port": 3031,
