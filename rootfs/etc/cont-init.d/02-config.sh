@@ -24,7 +24,7 @@ mkdir -p /config/sensu/cache
 CONFIG="/config/sensu/agent.conf"
 bashio::log.info "Configuring Sensu..."
 tempio \
-    -conf /config/sensu/options.json \
+    -conf /data/options.json \
     -template usr/share/tempio/sensu.jinja2 \
     -out $CONFIG
 

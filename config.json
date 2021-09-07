@@ -1,6 +1,6 @@
 {
   "name": "Sensu Agent",
-  "version": "0.0.27",
+  "version": "0.0.28",
   "slug": "sensu_agent",
   "apparmor" : false,
   "watchdog": "http://[HOST]:[PORT:3031]/healthz",
@@ -37,7 +37,7 @@
     "log_level" : "debug",
     "sensu_user": "agent",
     "sensu_password": null,
-    "sensu_cache_dir": "/data",
+    "sensu_cache_dir": "/config/sensu",
     "sensu_local_api_disable": false,
     "sensu_local_statsd_disable": false,
     "sensu_local_socket_disable": false
