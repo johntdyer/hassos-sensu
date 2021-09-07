@@ -17,14 +17,14 @@ fi
 # interface=$(bashio::network.name)
 
 bashio::log.info "Using hostname=${HOSTNAME}" #// interface=${interface}"
-mkdir -p /data/sensu/cache
+mkdir -p /config/sensu/cache
 # mkdir -p /etc/sensu/
 # mkdir -p /var/cache/sensu/sensu-agent
 
-CONFIG="/data/agent.conf"
+CONFIG="/config/sensu/agent.conf"
 bashio::log.info "Configuring Sensu..."
 tempio \
-    -conf /data/options.json \
+    -conf /config/sensu/options.json \
     -template usr/share/tempio/sensu.jinja2 \
     -out $CONFIG
 

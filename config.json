@@ -1,6 +1,6 @@
 {
   "name": "Sensu Agent",
-  "version": "0.0.26",
+  "version": "0.0.27",
   "slug": "sensu_agent",
   "apparmor" : false,
   "watchdog": "http://[HOST]:[PORT:3031]/healthz",

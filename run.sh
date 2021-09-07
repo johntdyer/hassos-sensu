@@ -3,7 +3,7 @@
 
 bashio::log.info "Creating Sensiu Configuration"
 
-CONFIG_PATH=/data/options.json
+CONFIG_PATH=/config/sensu/options.json
 
 SENSU_BACKEND_URL="$(bashio::config 'sensu_backend_url')"
 SENSU_SUBSCRIPTIONS="$(bashio::config 'sensu_subscriptions')"
