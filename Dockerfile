@@ -1,9 +1,9 @@
 ARG BUILD_FROM=alpine
-FROM golang:1.15.2-alpine AS gobuilder
+FROM golang:1.18.0-alpine AS gobuilder
 
 ENV LANG C.UTF-8
 
-ENV SENSU_GO_VERSION=6.4.2
+ENV SENSU_GO_VERSION=6.7.5
 ARG SENSU_GO_HASH
 ARG SENSU_GO_ARCH
 
@@ -11,17 +11,16 @@ ARG SENSU_GO_ARCH
 
 WORKDIR /src/sensu-go
 
-RUN wget -O sensu-go.tar.gz "https://github.com/sensu/sensu-go/archive/v$SENSU_GO_VERSION.tar.gz"; \
-	tar -C . --strip-components=1  -xzf sensu-go.tar.gz; \
-	rm sensu-go.tar.gz;
+RUN wget -O sensu-go.tar.gz "https://github.com/sensu/sensu-go/archive/v$SENSU_GO_VERSION.tar.gz"
+RUN tar -C . --strip-components=1 -xzf sensu-go.tar.gz
+RUN rm sensu-go.tar.gz
 
-RUN go build -ldflags '-X "github.com/sensu/sensu-go/version.Version='`echo $SENSU_GO_VERSION`'" -X "github.com/sensu/sensu-go/version.BuildDate='`date +'%Y-%d-%m'`'" ' -o bin/sensu-agent ./cmd/sensu-agent
+RUN go build -ldflags '-X "github.com/sensu/sensu-go/version.Version='$(echo $SENSU_GO_VERSION)'" -X "github.com/sensu/sensu-go/version.BuildDate='$(date +'%Y-%d-%m')'" ' -o bin/sensu-agent ./cmd/sensu-agent
 
-RUN bin/sensu-agent version |grep $SENSU_GO_VERSION
+RUN bin/sensu-agent version | grep $SENSU_GO_VERSION
 
 # FROM sensu/sensu as orginal
 # RUN echo "Get me youre scripts ;)"
-
 
 # ARG BUILD_FROM
 # amd64: alpine:${VERSION}
@@ -32,7 +31,7 @@ RUN bin/sensu-agent version |grep $SENSU_GO_VERSION
 
 # FROM homeassistant/aarch64-base:3.11
 #ghcr.io/home-assistant/base:3.13
-FROM homeassistant/amd64-base:3.11
+FROM homeassistant/amd64-base:3.15
 
 # Environment variables
 ENV \
@@ -43,11 +42,9 @@ ENV \
   S6_CMD_WAIT_FOR_SERVICES=1 \
   TERM="xterm-256color"
 
-
 # COPY --from=gobuilder /src/sensu-go/bin/ /opt/sensu/bin/
 
 SHELL ["/bin/ash", "-o", "pipefail", "-c"]
-
 
 # Copy data
 COPY rootfs /
@@ -58,9 +55,6 @@ RUN chmod a+x /run.sh
 # S6-Overlay
 WORKDIR /
 ENTRYPOINT ["/init"]
-
-
-
 
 # ARG BUILD_FROM=homeassistant/amd64-base:latest
 # FROM $BUILD_FROM
@@ -81,7 +75,6 @@ ENTRYPOINT ["/init"]
 #     adduser -DHS sensu -G sensu -h /var/lib/sensu && \
 #     mkdir -pv /etc/sensu /var/cache/sensu /var/lib/sensu /var/log/sensu /var/run/sensu && \
 #     chown -R sensu:sensu /etc/sensu /var/cache/sensu /var/lib/sensu /var/log/sensu /var/run/sensu /var/lib/sensu
-
 
 # # Copy data for add-on
 # COPY run.sh /
@@ -109,7 +102,6 @@ ENTRYPOINT ["/init"]
 #   org.label-schema.vcs-url="https://gitlab.com/johntdyer/addon-sensu-agent/" \
 #   org.label-schema.vendor="HomeAssistant add-ons by John Dyer"
 
-
 EXPOSE 3030 3031 8126
 
 COPY --from=gobuilder /src/sensu-go/bin/ /opt/sensu/bin/
@@ -117,4 +109,3 @@ COPY --from=gobuilder /src/sensu-go/bin/ /opt/sensu/bin/
 CMD ["/usr/bin/with-contenv","bashio","/run.sh"]
 
 # Copy data
-
