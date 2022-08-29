@@ -27,7 +27,7 @@
 # export SENSU_PASSWORD
 # export SENSU_CACHE_DIR
 # export SENSU_NAME
-
+export S6_BEHAVIOUR_IF_STAGE2_FAILS=0
 env
 
 /opt/sensu/bin/sensu-agent start
