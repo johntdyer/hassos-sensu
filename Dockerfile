@@ -49,8 +49,8 @@ SHELL ["/bin/ash", "-o", "pipefail", "-c"]
 # Copy data
 COPY rootfs /
 # # Copy data for add-on
-COPY run.sh /
-RUN chmod a+x /run.sh
+# COPY run.sh /
+# RUN chmod a+x /run.sh
 
 # S6-Overlay
 WORKDIR /
