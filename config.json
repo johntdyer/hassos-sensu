@@ -1,8 +1,8 @@
 {
   "name": "Sensu Agent",
-  "version": "0.0.31",
+  "version": "0.0.32",
   "slug": "sensu_agent",
-  "apparmor" : false,
+  "apparmor" : true,
   "init": false,
   "watchdog": "http://[HOST]:[PORT:3031]/healthz",
   "map": [

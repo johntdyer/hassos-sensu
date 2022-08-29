@@ -76,9 +76,9 @@ ENTRYPOINT ["/init"]
 #     mkdir -pv /etc/sensu /var/cache/sensu /var/lib/sensu /var/log/sensu /var/run/sensu && \
 #     chown -R sensu:sensu /etc/sensu /var/cache/sensu /var/lib/sensu /var/log/sensu /var/run/sensu /var/lib/sensu
 
-# # Copy data for add-on
-# COPY run.sh /
-# RUN chmod a+x /run.sh
+# Copy data for add-on
+COPY run.sh /
+RUN chmod a+x /run.sh
 
 # # RUN mkdir /data
 # # USER sensu
