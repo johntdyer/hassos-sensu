@@ -56,29 +56,12 @@ COPY rootfs /
 WORKDIR /
 ENTRYPOINT ["/init"]
 
-# ARG BUILD_FROM=homeassistant/amd64-base:latest
-# FROM $BUILD_FROM
-
-# ARG BUI\
-# # Entrypoint & CMD
-# ENTRYPOINT ["/init"]
-
-# ENV LANG C.UTF-8
-
-# WORKDIR /
-
-# # FROM $BUILD_FROM
-# # FROM ghcr.io/hassio-addons/base/aarch64@sha256:5086c238bdf93a67ca83803960516f160af6323251902d71eef5deb59ea82f7b
-# # ENV LANG C.UTF-8
-
-# RUN addgroup -S sensu && \
-#     adduser -DHS sensu -G sensu -h /var/lib/sensu && \
-#     mkdir -pv /etc/sensu /var/cache/sensu /var/lib/sensu /var/log/sensu /var/run/sensu && \
-#     chown -R sensu:sensu /etc/sensu /var/cache/sensu /var/lib/sensu /var/log/sensu /var/run/sensu /var/lib/sensu
-
 # Copy data for add-on
 COPY run.sh /
 RUN chmod a+x /run.sh
+RUN chmod a+x /etc/cont-init.d/00-banner.sh
+RUN chmod a+x /etc/cont-init.d/01-log-level.sh
+RUN chmod a+x /etc/cont-init.d/02-config.sh
 
 # # RUN mkdir /data
 # # USER sensu
