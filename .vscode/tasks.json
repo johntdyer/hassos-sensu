@@ -6,7 +6,8 @@
         {
             "label": "Start Home Assistant",
             "type": "shell",
-            "command": "./.devcontainer/supervisor.sh",
+            "command": "supervisor_run",
+
             "group": {
                 "kind": "test",
                 "isDefault": true,
