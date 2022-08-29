@@ -27,4 +27,6 @@ export SENSU_PASSWORD
 export SENSU_CACHE_DIR
 export SENSU_NAME
 
+env
+
 /opt/sensu/bin/sensu-agent start
