@@ -62,6 +62,7 @@ RUN chmod a+x /run.sh
 RUN chmod a+x /etc/cont-init.d/00-banner.sh
 RUN chmod a+x /etc/cont-init.d/01-log-level.sh
 RUN chmod a+x /etc/cont-init.d/02-config.sh
+RUN chmod a+x /etc/cont-finish.d/99-message.sh
 
 # # RUN mkdir /data
 # # USER sensu

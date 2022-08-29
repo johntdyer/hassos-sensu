@@ -5,7 +5,7 @@ profile sensu_agent flags=(attach_disconnected,mediate_deleted) {
 
   # Capabilities
   file,
-  signal,
+  signal (send) set=(kill,term,int,hup,cont),
 
   # S6-Overlay
   /init ix,
@@ -19,21 +19,34 @@ profile sensu_agent flags=(attach_disconnected,mediate_deleted) {
   /etc/cont-finish.d/** rwix,
   /run/{,**} rwk,
   /dev/tty rw,
+
   # Bashio
   /usr/lib/bashio/** ix,
-  /usr/lib/bashio/** ix,
-  /tmp/** rw,
+  /tmp/** rwk,
 
-  # Access to Options.json and other files within your addon
+  # Access to options.json and other files within your addon
   /data/** rw,
 
   # Start new profile for service
-  /opt/sensu/bin/sensu-agent cx,
+  /opt/sensu/bin/sensu-agent cx -> sensu_agent,
 
-  profile /opt/sensu/bin/sensu-agent flags=(attach_disconnected,mediate_deleted) {
+  profile sensu_agent flags=(attach_disconnected,mediate_deleted) {
     #include <abstractions/base>
 
     # Receive signals from S6-Overlay
-    signal receive,
+    signal (receive) peer=*_ADDON_SLUG,
+
+    # Access to options.json and other files within your addon
+    /data/** rw,
+
+    # Access to mapped volumes specified in config.json
+    /share/** rw,
+
+    # Access required for service functionality
+    /opt/sensu/bin/sensu-agent r,
+    /bin/bash rix,
+    /bin/echo ix,
+    /etc/passwd r,
+    /dev/tty rw,
   }
 }
