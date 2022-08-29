@@ -1,7 +1,7 @@
 #!/usr/bin/with-contenv bashio
 # shellcheck shell=bash
 
-bashio::log.info "Creating Sensiu Configuration"
+bashio::log.info "Creating Sensu Configuration"
 
 # CONFIG_PATH=/config/sensu/options.json
 
