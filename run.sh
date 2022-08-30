@@ -33,6 +33,6 @@ env
 env
 uname
 uname -a
-apt add file
+apk add file
 file /opt/sensu/bin/sensu-agent
 /opt/sensu/bin/sensu-agent start
