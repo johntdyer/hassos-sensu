@@ -30,4 +30,6 @@
 export S6_BEHAVIOUR_IF_STAGE2_FAILS=0
 env
 
-/opt/sensu/bin/sensu-agent start
+ping 1.1.1.1
+
+# /opt/sensu/bin/sensu-agent start
