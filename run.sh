@@ -27,9 +27,4 @@
 # export SENSU_CACHE_DIR
 # export SENSU_NAME
 
-ls -la /
-whoami
-ls -la
-ls -la /data
-
-/opt/sensu/bin/sensu-agent start
+/opt/sensu/bin/sensu-agent start --config-file /config/sensu/agent.conf
