@@ -26,13 +26,10 @@
 # export SENSU_PASSWORD
 # export SENSU_CACHE_DIR
 # export SENSU_NAME
-export S6_BEHAVIOUR_IF_STAGE2_FAILS=0
-env
 
-# ping 1.1.1.1
-env
-uname
-uname -a
-apk add file
-file /opt/sensu/bin/sensu-agent
+ls -la /
+whoami
+ls -la
+ls -la /data
+
 /opt/sensu/bin/sensu-agent start

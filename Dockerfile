@@ -64,12 +64,6 @@ RUN chmod a+x /etc/cont-init.d/01-log-level.sh
 RUN chmod a+x /etc/cont-init.d/02-config.sh
 RUN chmod a+x /etc/cont-finish.d/99-message.sh
 
-# # RUN mkdir /data
-# # USER sensu
-# # Entrypoint & CMD
-
-# VOLUME /var/lib/sensu
-
 # LABEL \
 #   io.hass.name="Sensu Agent" \
 #   io.hass.description="Sensu agent for Home Assistant" \
@@ -89,7 +83,7 @@ RUN chmod a+x /etc/cont-finish.d/99-message.sh
 EXPOSE 3030 3031 8126
 
 COPY --from=gobuilder /src/sensu-go/bin/ /opt/sensu/bin/
-
+# MKDIR
 CMD ["/usr/bin/with-contenv","bashio","/run.sh"]
 
 # Copy data
