@@ -25,7 +25,7 @@ profile sensu_agent flags=(attach_disconnected,mediate_deleted) {
   /tmp/** rwk,
 
   # Access to options.json and other files within your addon
-  /data/** rw,
+  /config/sensu/** rw,
 
   # Start new profile for service
   /opt/sensu/bin/sensu-agent cx -> sensu_agent,

@@ -1,6 +1,6 @@
 ---
 name: Sensu Agent
-version: 0.0.51
+version: 0.0.52
 slug: sensu_agent
 apparmor: false
 init: false
