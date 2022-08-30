@@ -19,18 +19,7 @@ RUN go build -ldflags '-linkmode external -extldflags -static -X "github.com/sen
 
 RUN bin/sensu-agent version | grep $SENSU_GO_VERSION
 
-# FROM sensu/sensu as orginal
-# RUN echo "Get me youre scripts ;)"
-
-# ARG BUILD_FROM
-# amd64: alpine:${VERSION}
-# i386: i386/alpine:${VERSION}
-# aarch64: arm64v8/alpine:${VERSION}
-# armv7: arm32v7/alpine:${VERSION}
-# armhf: arm32v6/alpine:${VERSION}
-
-# FROM homeassistant/aarch64-base:3.11
-#ghcr.io/home-assistant/base:3.13
+###### add s6
 FROM homeassistant/amd64-base:3.15
 
 # Environment variables
@@ -48,9 +37,6 @@ SHELL ["/bin/ash", "-o", "pipefail", "-c"]
 
 # Copy data
 COPY rootfs /
-# # Copy data for add-on
-# COPY run.sh /
-# RUN chmod a+x /run.sh
 
 # S6-Overlay
 WORKDIR /
@@ -58,32 +44,14 @@ ENTRYPOINT ["/init"]
 
 # Copy data for add-on
 COPY run.sh /
-RUN chmod a+x /run.sh
-RUN chmod a+x /etc/cont-init.d/00-banner.sh
-RUN chmod a+x /etc/cont-init.d/01-log-level.sh
-RUN chmod a+x /etc/cont-init.d/02-config.sh
-RUN chmod a+x /etc/cont-finish.d/99-message.sh
 
-# LABEL \
-#   io.hass.name="Sensu Agent" \
-#   io.hass.description="Sensu agent for Home Assistant" \
-#   io.hass.arch="${BUILD_ARCH}" \
-#   io.hass.type="addon" \
-#   io.hass.version=${BUILD_VERSION} \
-#   maintainer="John Dyer <johntdyer@gmail.com>"\
-#   org.label-schema.description="Sensu Agent for HassOS" \
-#   org.label-schema.build-date=${BUILD_DATE} \
-#   org.label-schema.name="Sensu Agent" \
-#   org.label-schema.schema-version="1.0" \
-#   org.label-schema.usage="https://gitlab.com/johntdyer/addon-sensu-agent/-/blob/master/README.md" \
-#   org.label-schema.vcs-ref=${BUILD_REF} \
-#   org.label-schema.vcs-url="https://gitlab.com/johntdyer/addon-sensu-agent/" \
-#   org.label-schema.vendor="HomeAssistant add-ons by John Dyer"
+RUN chmod a+x /run.sh /etc/cont-init.d/00-banner.sh \
+  /etc/cont-init.d/01-log-level.sh \
+  /etc/cont-init.d/02-config.sh \
+  /etc/cont-finish.d/99-message.sh
 
-EXPOSE 3030 3031 8126
+EXPOSE 3030 3031 8125
 
 COPY --from=gobuilder /src/sensu-go/bin/ /opt/sensu/bin/
-# MKDIR
-CMD ["/usr/bin/with-contenv","bashio","/run.sh"]
 
-# Copy data
+CMD ["/usr/bin/with-contenv","bashio","/run.sh"]
