@@ -30,5 +30,9 @@ export S6_BEHAVIOUR_IF_STAGE2_FAILS=0
 env
 
 # ping 1.1.1.1
-
+env
+uname
+uname -a
+apt add file
+file /opt/sensu/bin/sensu-agent
 /opt/sensu/bin/sensu-agent start
