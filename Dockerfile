@@ -14,8 +14,8 @@ WORKDIR /src/sensu-go
 RUN wget -O sensu-go.tar.gz "https://github.com/sensu/sensu-go/archive/v$SENSU_GO_VERSION.tar.gz"
 RUN tar -C . --strip-components=1 -xzf sensu-go.tar.gz
 RUN rm sensu-go.tar.gz
-
-RUN go build -ldflags '-X "github.com/sensu/sensu-go/version.Version='$(echo $SENSU_GO_VERSION)'" -X "github.com/sensu/sensu-go/version.BuildDate='$(date +'%Y-%d-%m')'" ' -o bin/sensu-agent ./cmd/sensu-agent
+RUN apk add build-base
+RUN go build -ldflags '-linkmode external -extldflags -static -X "github.com/sensu/sensu-go/version.Version='$(echo $SENSU_GO_VERSION)'" -X "github.com/sensu/sensu-go/version.BuildDate='$(date +'%Y-%d-%m')'" ' -o bin/sensu-agent ./cmd/sensu-agent
 
 RUN bin/sensu-agent version | grep $SENSU_GO_VERSION
 
