@@ -16,7 +16,6 @@
 # SENSU_CACHE_DIR="$(bashio::config 'sensu_cache_dir')"
 # SENSU_NAME="$(bashio::config 'sensu_name')"
 
-
 # export SENSU_BACKEND_URL
 # export SENSU_SUBSCRIPTIONS
 # export SENSU_SOCKET_PORT
@@ -30,6 +29,6 @@
 export S6_BEHAVIOUR_IF_STAGE2_FAILS=0
 env
 
-ping 1.1.1.1
+# ping 1.1.1.1
 
-# /opt/sensu/bin/sensu-agent start
+/opt/sensu/bin/sensu-agent start

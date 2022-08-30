@@ -3,7 +3,7 @@ FROM golang:1.18.0-alpine AS gobuilder
 
 ENV LANG C.UTF-8
 
-ENV SENSU_GO_VERSION=6.7.5
+ENV SENSU_GO_VERSION=6.8.0
 ARG SENSU_GO_HASH
 ARG SENSU_GO_ARCH
 
@@ -42,7 +42,7 @@ ENV \
   S6_CMD_WAIT_FOR_SERVICES=1 \
   TERM="xterm-256color"
 
-# COPY --from=gobuilder /src/sensu-go/bin/ /opt/sensu/bin/
+COPY --from=gobuilder /src/sensu-go/bin/ /opt/sensu/bin/
 
 SHELL ["/bin/ash", "-o", "pipefail", "-c"]
 
