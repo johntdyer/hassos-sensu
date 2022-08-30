@@ -1,8 +1,8 @@
 ---
 name: Sensu Agent
-version: 0.0.52
+version: 0.0.53
 slug: sensu_agent
-apparmor: false
+apparmor: true
 init: false
 watchdog: http://[HOST]:[PORT:3031]/healthz
 map:
