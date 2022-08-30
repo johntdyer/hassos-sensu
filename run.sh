@@ -26,5 +26,7 @@
 # export SENSU_PASSWORD
 # export SENSU_CACHE_DIR
 # export SENSU_NAME
-
+ls -la /config/sensu/agent.conf
+whoami
+touch /config/sensu/test
 /opt/sensu/bin/sensu-agent start --config-file /config/sensu/agent.conf

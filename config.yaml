@@ -1,6 +1,6 @@
 ---
 name: Sensu Agent
-version: 0.0.49
+version: 0.0.50
 slug: sensu_agent
 apparmor: true
 init: false
@@ -35,7 +35,7 @@ options:
   log_level: debug
   sensu_user: agent
   sensu_password:
-  sensu_cache_dir: "/config/sensu"
+  sensu_cache_dir: "/config/sensu/cache"
   sensu_local_api_disable: false
   sensu_local_statsd_disable: false
   sensu_local_socket_disable: false
